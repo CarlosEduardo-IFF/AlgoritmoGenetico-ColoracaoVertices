@@ -1,31 +1,37 @@
 package main;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import coloracaoGenetica.ColoracaoGrafosGenetica;
 import grafo.Grafo;
-import manipulacaoArquivos.ManipuladorArquivo;
+import manipulacaoArquivos.*;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner scanner = new Scanner(System.in);
+		ManipulaDataset leitor = new ManipulaDataset();
 
-		System.out.print("Digite a quantidade de vÃ©rtices: ");
+		Grafo novoGrafo = new Grafo(leitor.obterVerticesArestas()[0], leitor.obterVerticesArestas()[1]);
+		leitor.lerDoDataset(novoGrafo);
+		
+/*
+		System.out.print("Digite a quantidade de vértices: ");
 		int vertices = scanner.nextInt();
 		scanner.nextLine();
 
 		Grafo novoGrafo = new Grafo(vertices);
 		novoGrafo.gerarGrafo();
 		novoGrafo.contarArestas();
-
-		ManipuladorArquivo.escreverMatrizAdjacenciaEmArquivo(novoGrafo.getMatrizAdjacencia(), novoGrafo.getVertices(),
+*/
+	/*	ManipuladorArquivo.escreverMatrizAdjacenciaEmArquivo(novoGrafo.getMatrizAdjacencia(), novoGrafo.getVertices(),
 				novoGrafo.getArestas(), "matriz_adjacencia.txt");
-		System.out.println("Matriz de adjacÃªncia gerada com sucesso!");
+		System.out.println("Matriz de adjacência gerada com sucesso!");*/
 
-		System.out.println("Quantas vezes vocÃª deseja executar o algoritmo?");
+		System.out.println("Quantas vezes você deseja executar o algoritmo?");
 		int numeroExecucoes = scanner.nextInt();
 
 		Map<Integer, Integer> contagemCores = new HashMap<>();
@@ -63,12 +69,12 @@ public class Main {
 			contagemCores.put(coresUnicas, contagemCores.getOrDefault(coresUnicas, 0) + 1);
 		}
 
-		System.out.println("\nEstatÃ­sticas das execuÃ§Ãµes:");
+		System.out.println("\nEstatísticas das execuções:");
 		for (Map.Entry<Integer, Integer> entrada : contagemCores.entrySet()) {
 			System.out.println(entrada.getValue() + " vezes usou " + entrada.getKey() + " cores.");
 		}
-		System.out.println("\nSoluÃ§Ãµes vÃ¡lidas: " + solucoesValidas);
-		System.out.println("SoluÃ§Ãµes invÃ¡lidas: " + solucoesInvalidas);
+		System.out.println("\nSoluções válidas: " + solucoesValidas);
+		System.out.println("Soluções inválidas: " + solucoesInvalidas);
 
 		scanner.close();
 	}

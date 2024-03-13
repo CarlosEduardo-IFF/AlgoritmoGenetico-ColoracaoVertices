@@ -66,9 +66,9 @@ public class ColoracaoGrafosGenetica {
 		melhor = melhorSolucao;
 
 		if (!temVerticesAdjacentesMesmaCor(melhorSolucao)) {
-			System.out.println("A solu√ß√£o encontrada √© v√°lida: n√£o h√° v√©rtices adjacentes com a mesma cor.");
+			System.out.println("A soluÁ„o encontrada È v·lida: n„o h· vÈrtices adjacentes com a mesma cor.");
 		} else {
-			System.out.println("A solu√ß√£o encontrada √© inv√°lida: h√° v√©rtices adjacentes com a mesma cor.");
+			System.out.println("A soluÁ„o encontrada È inv·lida: h· vÈrtices adjacentes com a mesma cor.");
 		}
 	}
 
@@ -268,13 +268,13 @@ public class ColoracaoGrafosGenetica {
 	}
 
 	private void imprimirCoresVertices(int[] coresVertices) {
-		System.out.println("Cores dos V√©rtices:");
+		System.out.println("Cores dos vÈrtices:");
 		Set<Integer> coresUnicas = new HashSet<>();
 		for (int i = 0; i < coresVertices.length; i++) {
-			System.out.println("V√©rtice " + i + ": Cor " + coresVertices[i]);
+			System.out.println("VÈrtice " + i + ": Cor " + coresVertices[i]);
 			coresUnicas.add(coresVertices[i]);
 		}
-		System.out.println("Total de cores √∫nicas usadas: " + coresUnicas.size());
+		System.out.println("Total de cores ˙nicas usadas: " + coresUnicas.size());
 	}
 
 	private boolean temVerticesAdjacentesMesmaCor(int[] coresVertices) {

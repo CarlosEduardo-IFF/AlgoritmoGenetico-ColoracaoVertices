@@ -17,6 +17,12 @@ public class Grafo {
 		this.matrizAdjacencia = matrizAdjacencia;
 		this.arestas = arestas;
 	}
+    //Método construtor para instanciar a matrizAdjancencia apenas com 0's
+    public Grafo(int vertices, int arestas) {
+		this.vertices = vertices;
+		this.matrizAdjacencia = new int[vertices][vertices]; // Inicializa a matriz com zeros
+		this.arestas = arestas;
+	}
 
 	public void gerarGrafo() {
         int[][] grafo = new int[this.vertices][this.vertices];
@@ -60,11 +66,15 @@ public class Grafo {
 	}
 
 	public int[][] getMatrizAdjacencia() {
-		return matrizAdjacencia;
+		return this.matrizAdjacencia;
 	}
 
 	public void setMatrizAdjacencia(int[][] matrizAdjacencia) {
 		this.matrizAdjacencia = matrizAdjacencia;
+	}
+	
+	public void adicionarAresta(int linha, int coluna) {
+		this.matrizAdjacencia[linha][coluna] = 1;
 	}
 
 }
