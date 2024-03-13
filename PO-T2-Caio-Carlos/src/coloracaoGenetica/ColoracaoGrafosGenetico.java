@@ -1,3 +1,4 @@
+//Grupo: Caio Moretti e Carlos Eduardo Braga
 package coloracaoGenetica;
 
 import java.util.Random;
