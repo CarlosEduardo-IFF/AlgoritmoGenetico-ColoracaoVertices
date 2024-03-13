@@ -4,17 +4,19 @@ import java.util.Random;
 import java.util.Set;
 import java.util.HashSet;
 
-public class ColoracaoGrafosGenetica {
-	int M;
-	int Ng;
-	int N0;
-	double taxaMutacao;
-	double taxaCrossover;
-	int[][] matrizAdjacencia;
-	int V;
-	int[] melhor;
+public class ColoracaoGrafosGenetico {
+	int M; // Tamanho da população
+	int Ng; // Número de gerações
+	int N0; // Percentual de descendentes
+	double taxaMutacao; // Taxa de mutação
+	double taxaCrossover; // Taxa de crossover
+	int[][] matrizAdjacencia; // Matriz de adjacência
+	int V; // Número de vértices
+	int[] melhor; // Melhor solução encontrada
+	int numeroDeCores;
 
-	public ColoracaoGrafosGenetica(int tamanhoPopulacao, int geracoes, int percentualDescendentes, double taxaMutacao,
+	// Construtor
+	public ColoracaoGrafosGenetico(int tamanhoPopulacao, int geracoes, int percentualDescendentes, double taxaMutacao,
 			double taxaCrossover, int[][] matrizAdjacencia) {
 		this.M = tamanhoPopulacao;
 		this.Ng = geracoes;
@@ -25,6 +27,7 @@ public class ColoracaoGrafosGenetica {
 		this.V = matrizAdjacencia.length;
 	}
 
+	// Método principal para executar o algoritmo genético
 	public void executar() {
 
 		int[][] populacaoAtual = new int[M][V];
@@ -34,10 +37,13 @@ public class ColoracaoGrafosGenetica {
 		int[] melhorSolucao = populacaoAtual[0];
 		int melhorAptidao = calcularAptidao(melhorSolucao);
 
+		this.numeroDeCores = V;
+		// Loop pelas gerações
 		for (int gen = 0; gen < Ng; gen++) {
 
-			if (melhorAptidao < V) {
-				reduzirCores(populacaoAtual);
+			// Se a melhor aptidão é menor que o número de vértices, reduz as cores
+			if (melhorAptidao < numeroDeCores) {
+				reduzirCores();
 			}
 
 			int[][] P1 = new int[M / 2][V];
@@ -52,6 +58,7 @@ public class ColoracaoGrafosGenetica {
 
 			populacaoAtual = selecionar(populacaoAtual, descendentes);
 
+			// Atualiza a melhor solução encontrada
 			for (int[] cromossomo : populacaoAtual) {
 				int aptidaoAtual = calcularAptidao(cromossomo);
 				if (aptidaoAtual < melhorAptidao) {
@@ -61,17 +68,23 @@ public class ColoracaoGrafosGenetica {
 			}
 		}
 
+		// Imprime as cores dos vértices da melhor solução encontrada
 		imprimirCoresVertices(melhorSolucao);
 
+		// Atualiza a variável 'melhor' com a melhor solução encontrada
 		melhor = melhorSolucao;
 
+		// Verifica se a solução encontrada é válida ou inválida
 		if (!temVerticesAdjacentesMesmaCor(melhorSolucao)) {
-			System.out.println("A solu��o encontrada � v�lida: n�o h� v�rtices adjacentes com a mesma cor.");
+			System.out.println("A solução encontrada é válida: não há vértices adjacentes com a mesma cor.");
+			System.out.println("\n======================================================================\n");
 		} else {
-			System.out.println("A solu��o encontrada � inv�lida: h� v�rtices adjacentes com a mesma cor.");
+			System.out.println("A solução encontrada é inválida: há vértices adjacentes com a mesma cor.");
+			System.out.println("\n======================================================================\n");
 		}
 	}
 
+	// Inicializa a população com cores válidas para os vértices
 	private void inicializarPopulacao(int[][] populacao) {
 		for (int i = 0; i < M; i++) {
 			for (int j = 0; j < V; j++) {
@@ -81,6 +94,7 @@ public class ColoracaoGrafosGenetica {
 		}
 	}
 
+	// Encontra uma cor válida para um vértice específico
 	private int encontrarCorValidaParaVertice(int[] cromossomo, int vertice) {
 		Random rand = new Random();
 		int cor = rand.nextInt(V);
@@ -92,12 +106,14 @@ public class ColoracaoGrafosGenetica {
 		return cor;
 	}
 
-	private void avaliarPopulacao(int[][] populacao, int N0) {
-		for (int i = 0; i < N0; i++) {
+	// Avalia a população calculando a aptidão de cada indivíduo
+	private void avaliarPopulacao(int[][] populacao, int M) {
+		for (int i = 0; i < M; i++) {
 			calcularAptidao(populacao[i]);
 		}
 	}
 
+	// Calcula a aptidão de um cromossomo (número de cores únicas utilizadas)
 	private int calcularAptidao(int[] cromossomo) {
 		Set<Integer> cores = new HashSet<>();
 		for (int cor : cromossomo) {
@@ -115,32 +131,20 @@ public class ColoracaoGrafosGenetica {
 		return aptidao;
 	}
 
-	private void reduzirCores(int[][] populacao) {
-		int[] contagemCores = new int[V];
-		for (int[] cromossomo : populacao) {
-			for (int cor : cromossomo) {
-				contagemCores[cor]++;
-			}
-		}
-
-		int[] novasCores = new int[V];
-		int novaCor = 0;
-		for (int i = 0; i < V; i++) {
-			if (contagemCores[i] > 0) {
-				novasCores[i] = novaCor;
-				novaCor++;
-			} else {
-				novasCores[i] = V;
-			}
-		}
+	// Reduz as cores se a melhor aptidão for menor que o número de vértices
+	private void reduzirCores() {
+	this.numeroDeCores = this.numeroDeCores - 1;
 	}
 
+
+	// Divide a população em duas partes
 	private void dividirPopulacao(int[][] populacao, int[][] P1, int[][] P2) {
 		int meio = M / 2;
 		System.arraycopy(populacao, 0, P1, 0, meio);
 		System.arraycopy(populacao, meio, P2, 0, meio);
 	}
 
+	// Realiza o crossover entre os indivíduos da população
 	private void crossover(int[][] P1, int[][] descendentes, double taxaCrossover) {
 		Random rand = new Random();
 		for (int i = 0; i < N0; i++) {
@@ -181,6 +185,7 @@ public class ColoracaoGrafosGenetica {
 		}
 	}
 
+	// Verifica se a cor é valida
 	private boolean corEValidaParaVertice(int[] cromossomo, int vertice, int cor) {
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			if (matrizAdjacencia[vertice][i] == 1 && cromossomo[i] == cor) {
@@ -190,6 +195,7 @@ public class ColoracaoGrafosGenetica {
 		return true;
 	}
 
+	// Realiza a mutação nos descendentes
 	private void mutacao(int[][] P2, int[][] descendentes, int geracao, double taxaMutacao) {
 		Random rand = new Random();
 
@@ -209,6 +215,8 @@ public class ColoracaoGrafosGenetica {
 		}
 	}
 
+	// Corrige a solução, garantindo que não haja vértices adjacentes com a mesma
+	// cor
 	@SuppressWarnings("unchecked")
 	private void corrigirSolucao(int[] cromossomo) {
 		Set<Integer>[] coresAdjacentes = new HashSet[V];
@@ -237,6 +245,7 @@ public class ColoracaoGrafosGenetica {
 		}
 	}
 
+	// Verifica se uma cor pode ser utilizada para um vértice específico
 	private boolean podeRecolorir(int[] cromossomo, int vertice, int cor) {
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			if (matrizAdjacencia[vertice][i] == 1 && cromossomo[i] == cor) {
@@ -246,6 +255,8 @@ public class ColoracaoGrafosGenetica {
 		return true;
 	}
 
+	// Seleciona a nova população combinando os indivíduos da população atual e os
+	// descendentes
 	private int[][] selecionar(int[][] populacaoAtual, int[][] descendentes) {
 		int[][] populacaoCombinada = new int[M + N0][V];
 		System.arraycopy(populacaoAtual, 0, populacaoCombinada, 0, M);
@@ -267,16 +278,18 @@ public class ColoracaoGrafosGenetica {
 		return novaPopulacao;
 	}
 
+	// Imprime as cores dos vértices da solução
 	private void imprimirCoresVertices(int[] coresVertices) {
-		System.out.println("Cores dos v�rtices:");
+		System.out.println("Cores dos Vértices:");
 		Set<Integer> coresUnicas = new HashSet<>();
 		for (int i = 0; i < coresVertices.length; i++) {
-			System.out.println("V�rtice " + i + ": Cor " + coresVertices[i]);
+			System.out.println("Vértice " + i + ": Cor " + coresVertices[i]);
 			coresUnicas.add(coresVertices[i]);
 		}
-		System.out.println("Total de cores �nicas usadas: " + coresUnicas.size());
+		System.out.println("Total de cores únicas usadas: " + coresUnicas.size());
 	}
 
+	// Verifica se há vértices adjacentes com a mesma cor na solução
 	private boolean temVerticesAdjacentesMesmaCor(int[] coresVertices) {
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			for (int j = i + 1; j < matrizAdjacencia.length; j++) {
@@ -288,6 +301,7 @@ public class ColoracaoGrafosGenetica {
 		return false;
 	}
 
+	// Retorna o número de cores únicas utilizadas na solução
 	public int contarCoresUnicas(int[] solucao) {
 		Set<Integer> coresUnicas = new HashSet<>();
 		for (int cor : solucao) {
@@ -296,6 +310,7 @@ public class ColoracaoGrafosGenetica {
 		return coresUnicas.size();
 	}
 
+	// Verifica se a solução é válida (não há vértices adjacentes com a mesma cor)
 	public boolean solucaoEValida(int[] solucao) {
 		for (int i = 0; i < matrizAdjacencia.length; i++) {
 			for (int j = i + 1; j < matrizAdjacencia.length; j++) {
@@ -307,6 +322,7 @@ public class ColoracaoGrafosGenetica {
 		return true;
 	}
 
+	// Retorna a melhor solução encontrada
 	public int[] getMelhorSolucao() {
 		return melhor;
 	}
