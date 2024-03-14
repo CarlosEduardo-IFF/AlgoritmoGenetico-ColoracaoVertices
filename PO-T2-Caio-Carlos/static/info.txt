@@ -4,3 +4,10 @@ jean		|| 80		||  508		|| 10	|| 10
 david		|| 87		||  812		|| 11	|| 12
 mulsol.i.1	|| 197		||  3925	|| 49	|| 49
 zeroin.i.1	|| 211		||  4100	|| 49	|| 49
+myciel4		|| 23		||  71		|| 5	|| 5
+myciel5		|| 47		||  236		|| 6	|| 6
+myciel6		|| 95		||  744		|| 7	|| 7
+myciel7		|| 191		||  2360	|| 8	|| 8
+
+
+Grafos disponíveis em: https://mat.tepper.cmu.edu/COLOR/instances.html
