@@ -1,6 +1,8 @@
 //Grupo: Caio Moretti e Carlos Eduardo Braga
 package grafo;
 
+import java.util.Random;
+
 public class Grafo {
 
 	private int vertices;
@@ -24,7 +26,7 @@ public class Grafo {
 		this.arestas = arestas;
 	}
 
-	// Cria um grafo aleatÃ³rio
+	// Cria um grafo aleatório
 	public void gerarGrafo() {
 		int[][] grafo = new int[this.vertices][this.vertices];
 		Random random = new Random();

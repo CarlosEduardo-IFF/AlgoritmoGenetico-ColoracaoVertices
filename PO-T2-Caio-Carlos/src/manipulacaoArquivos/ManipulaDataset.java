@@ -16,7 +16,7 @@ public class ManipulaDataset {
 	public int[] obterVerticesArestas() throws IOException {
 		String currentDirectory = new File("").getAbsolutePath();
 
-		BufferedReader reader = new BufferedReader(new FileReader(currentDirectory + "\\static\\grafo.txt"));
+		BufferedReader reader = new BufferedReader(new FileReader(currentDirectory + "\\static\\zeroin.i.1_adjacency_matrix.txt"));
 		String linhaLida = reader.readLine();
 		String[] campos = linhaLida.split(" ");
 		int[] informacao = new int[2];
@@ -29,7 +29,7 @@ public class ManipulaDataset {
 	// Método para ler o arquivo de grafo e construir a estrutura de dados do grafo
 	public void lerDoDataset(Grafo estrutura) throws IOException {
 		String currentDirectory = new File("").getAbsolutePath();
-		BufferedReader reader = new BufferedReader(new FileReader(currentDirectory + "\\static\\grafo.txt"));
+		BufferedReader reader = new BufferedReader(new FileReader(currentDirectory + "\\static\\zeroin.i.1_adjacency_matrix.txt"));
 		String linhaLida = reader.readLine();
 		String[] campos = linhaLida.split(" ");
 		linhaLida = reader.readLine();

@@ -1,0 +1,6 @@
+Grafo		|| Vértices	||	Arestas	|| x(G) || Solução encontrada 
+huck 		|| 74		||  602		|| 11	|| 11
+jean		|| 80		||  508		|| 10	|| 10
+david		|| 87		||  812		|| 11	|| 12
+mulsol.i.1	|| 197		||  3925	|| 49	|| 49
+zeroin.i.1	|| 211		||  4100	|| 49	|| 49

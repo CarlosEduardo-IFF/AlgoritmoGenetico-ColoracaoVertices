@@ -16,7 +16,7 @@ public class Main {
 
 		Scanner scanner = new Scanner(System.in);
 
-		// utilizando um arquivo para gerar um objeto grafo
+		//Utilizando um arquivo para gerar um objeto grafo
 		ManipulaDataset manipulador = new ManipulaDataset();
 		Grafo novoGrafo = new Grafo(manipulador.obterVerticesArestas()[0], manipulador.obterVerticesArestas()[1]);
 		manipulador.lerDoDataset(novoGrafo);
@@ -38,8 +38,8 @@ public class Main {
 		System.out.println("Matriz de adjacÃªncia gerada com sucesso!\n");
 		*/
 		
-		// DefiniÃ§Ã£o de quantas vezes o programa serÃ¡ executado
-		System.out.println("Quantas vezes vocÃª deseja executar o algoritmo?");
+		// Definição de quantas vezes o programa será executado
+		System.out.println("Quantas vezes você deseja executar o algoritmo?");
 		int numeroExecucoes = scanner.nextInt();
 
 		Map<Integer, Integer> contagemCores = new HashMap<>();
@@ -53,7 +53,7 @@ public class Main {
 			double taxaMutacao = 0.5;
 			double taxaCrossover = 0.8;
 
-			// Realizando a coloraÃ§Ã£o de um grafo de uma execuÃ§Ã£o
+			// Realizando a coloração de um grafo de uma execução
 			ColoracaoGrafosGenetico coloracaoGrafos = new ColoracaoGrafosGenetico(tamanhoPopulacao, geracoes,
 					percentualDescendentes, taxaMutacao, taxaCrossover, novoGrafo.getMatrizAdjacencia());
 			coloracaoGrafos.executar();
@@ -61,7 +61,7 @@ public class Main {
 			int[] melhorSolucao = coloracaoGrafos.getMelhorSolucao();
 			int coresUnicas = coloracaoGrafos.contarCoresUnicas(melhorSolucao);
 
-			// verificaÃ§Ã£o de soluÃ§Ãµes
+			// verificação de solução
 			if (coloracaoGrafos.solucaoEValida(melhorSolucao)) {
 				solucoesValidas++;
 			} else {
@@ -71,13 +71,13 @@ public class Main {
 			contagemCores.put(coresUnicas, contagemCores.getOrDefault(coresUnicas, 0) + 1);
 		}
 
-		// Imprimindo os resultados obtidos apÃ³s todas execuÃ§Ãµes
-		System.out.println("\nEstatÃ­sticas das execuÃ§Ãµes:");
+		// Imprimindo os resultados obtidos após todas execuções
+		System.out.println("\nEstatásticas das execuçõees:");
 		for (Map.Entry<Integer, Integer> entrada : contagemCores.entrySet()) {
 			System.out.println(entrada.getValue() + " vezes usou " + entrada.getKey() + " cores.");
 		}
-		System.out.println("\nSoluÃ§Ãµes vÃ¡lidas: " + solucoesValidas);
-		System.out.println("SoluÃ§Ãµes invÃ¡lidas: " + solucoesInvalidas);
+		System.out.println("\nSoluções válidas: " + solucoesValidas);
+		System.out.println("Soluções inválidas: " + solucoesInvalidas);
 
 		scanner.close();
 	}
