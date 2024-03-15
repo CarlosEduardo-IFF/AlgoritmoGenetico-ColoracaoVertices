@@ -190,9 +190,9 @@ public class ColoracaoGrafosGenetico {
 	    }
 	}
 	
-	// Reduz as cores em 1
+	// Reduz as cores
 	private void reduzirCores() {
-	this.numeroDeCores = this.numeroDeCores - 1;
+	this.numeroDeCores = (int) this.melhorAptidaoCores;
 	}
 
 	// Divide a população em duas partes
